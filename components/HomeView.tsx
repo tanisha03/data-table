@@ -13,7 +13,7 @@ export default function HomeView() {
   const [appliedFilters, setAppliedFilters] = useState<string[]>([]);
   const [selectedRows, setSelectedRows] = useState<DataRow[]>([]);
   const [conversationDetails, setConversationDetails] = useState<ConversationPublic>(() => {
-    const storedDetails = localStorage.getItem('conversationDetails');
+    const storedDetails = typeof window !== "undefined" ? localStorage.getItem('conversationDetails') : null;
     return storedDetails ? JSON.parse(storedDetails) : {
       name: 'Naina',
       id: 123,
@@ -41,7 +41,7 @@ export default function HomeView() {
   });
 
   useEffect(() => {
-    localStorage.setItem('conversationDetails', JSON.stringify(conversationDetails));
+    if(typeof window !== "undefined") localStorage.setItem('conversationDetails', JSON.stringify(conversationDetails));
   }, [conversationDetails]);
 
   const startResize = (e: MouseEventHandler) => {
